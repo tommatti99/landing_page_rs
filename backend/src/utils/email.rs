@@ -1,15 +1,9 @@
 use std::env;
-use dotenv::dotenv;
-use crate:: collect_data_models::CollectDataRequest;
+use crate:: collect_models::CollectDataRequest;
 use lettre::message::header::ContentType;
 use lettre::transport::smtp::authentication::Credentials;
 use lettre::{Message, SmtpTransport, Transport};
 
-
-const SMTP_KEY = env::var("smtp_key").expect("")
-const SMTP_EMAIL = env::var("smtp_email").expect("")
-const SMTP_HOST = env::var("smtp_host").expect("")
-const EMAIL_RECEIVER = env::var("email_receiver").expect("")
 
 
 pub struct EmailMessage {
@@ -22,9 +16,9 @@ pub struct EmailMessage {
 impl EmailMessage {
     pub fn landing_page_email(data: CollectDataRequest) -> Self {
         EmailMessage {
-            email_to: EMAIL_RECEIVER,
-            email_from: SMTP_EMAIL,
-            email_subject: "Landing Page",
+            email_to: env::var("email_receiver").expect(""),
+            email_from: env::var("smtp_email").expect(""),
+            email_subject: "Landing Page".to_string(),
             email_body: format!(
                 "New Client \n\n
 
@@ -34,18 +28,18 @@ impl EmailMessage {
                  want_to_receive_more_info: {}\n
                  already_have_the_product: {}\n",
                     data.name, data.telephone_number, data.email, 
-                    data.want_to_receive_more_info, data.already_have_the_product);
+                    data.want_to_receive_more_info, data.already_have_the_product)
         }
     }
 }
 
 fn open_conn_email() -> SmtpTransport {
     let admin_cred: Credentials = Credentials::new(
-        (SMTP_EMAIL).to_string().to_owned(),
-        (SMTP_KEY).to_owned(),
+        (env::var("smtp_email").expect("")).to_string().to_owned(),
+        (env::var("smtp_key").expect("")).to_owned(),
     );
 
-    return SmtpTransport::relay(&SMTP_HOST.clone())
+    return SmtpTransport::relay(&env::var("smtp_host").expect("").clone())
         .unwrap()
         .credentials(admin_cred)
         .build();

@@ -1,8 +1,13 @@
+pub mod utils {
+    pub mod email;
+}
+pub mod collect_api;
+pub mod collect_models;
+
 #[macro_use] extern crate rocket;
-use crate::collect_data_api;
 
 #[launch]
 fn rocket() -> _ {
     rocket::build()
-        .mount("/api", routes![collect_data_api::collect_data_api])
+        .mount("/api", routes![collect_api::collect_data_api])
 }
