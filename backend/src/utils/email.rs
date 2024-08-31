@@ -15,9 +15,11 @@ pub struct EmailMessage {
 
 impl EmailMessage {
     pub fn landing_page_email(data: CollectDataRequest) -> Self {
+        dotenv::dotenv().expect("Failed to read .env file");
+
         EmailMessage {
-            email_to: env::var("email_receiver").expect(""),
-            email_from: env::var("smtp_email").expect(""),
+            email_to: env::var("email_receiver").expect("error email_receiver"),
+            email_from: env::var("smtp_email").expect("error smtp_email"),
             email_subject: "Landing Page".to_string(),
             email_body: format!(
                 "New Client \n\n
