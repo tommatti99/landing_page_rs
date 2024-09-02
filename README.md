@@ -1,14 +1,24 @@
-# Landing Page
+# Rust Landing Page
 
-### About
+## About
 
-It's just a simple landing page written entirely in rust
-
-You can send collected data from the page to the email set at .env file
+It's just a simple landing page written entirely in rust.
 
 Its used Rust Yew for frontend and Rust Rocket for Backend.
 
-### Screenshot
+It will send the input data to the email set.
+
+## Repository Struct
+
+### Backend
+  -you can set your smtp configurations and wich email will receive the messages at backend/.env file.
+
+### Frontend
+  -You can also set a different background at frontend/static.
+
+
+
+## Screenshot
 
 ![Screenshot do Projeto](frontend/screenshot/screenshot.png)
 
