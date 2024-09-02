@@ -1,7 +1,2 @@
-backend/**/*.rs linguist-language=Rust
-backend/**/*.toml linguist-language=Toml
-frontend/**/*.rs linguist-language=Rust
-frontend/**/*.toml linguist-language=Toml
-backend/.env linguist-vendored
-backend/.gitignore linguist-vendored
-Makefile linguist-language=Makefile
+backend/* linguist-documentation
+frontend/* linguist-documentation
