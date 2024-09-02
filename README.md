@@ -11,10 +11,10 @@ It will send the input data to the email set.
 ## Repository Struct
 
 ### Backend
-  -you can set your smtp configurations and wich email will receive the messages at backend/.env file.
+  - You can set your smtp configurations and wich email will receive the messages at backend/.env file.
 
 ### Frontend
-  -You can also set a different background at frontend/static.
+  - You can also set a different background at frontend/static.
 
 
 
