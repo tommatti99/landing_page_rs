@@ -1,2 +1,4 @@
 backend/* linguist-documentation
+backend/src/* linguist-documentation
 frontend/* linguist-documentation
+frontend/src/* linguist-documentation
