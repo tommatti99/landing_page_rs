@@ -2,3 +2,17 @@ backend/* linguist-documentation
 backend/src/* linguist-documentation
 frontend/* linguist-documentation
 frontend/src/* linguist-documentation
+
+backend/src/utils/email.rs linguist-language=Rust
+backend/src/collect_api.rs linguist-language=Rust
+backend/src/collect_models.rs linguist-language=Rust
+backend/src/main.rs linguist-language=Rust
+
+frontend/src/components/header.rs linguist-language=Rust
+frontend/src/components/form.rs linguist-language=Rust
+frontend/src/components/footer.rs linguist-language=Rust
+frontend/src/main.rs linguist-language=Rust
+
+*.rs linguist-language=Rust
+*.toml linguist-language=Toml
+Dockerfile linguist-language=Dockerfile
