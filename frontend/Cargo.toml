@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 yew = { version = "0.21.0", features = ["csr"] }
 reqwest = "0.12.7"
+web-sys = { version = "0.3.70", features = ["Window", "HtmlInputElement"] }
