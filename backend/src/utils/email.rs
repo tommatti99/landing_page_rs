@@ -1,9 +1,12 @@
-use std::env;
+use std::fs;
 use crate:: collect_models::CollectDataRequest;
 use lettre::message::header::ContentType;
 use lettre::transport::smtp::authentication::Credentials;
 use lettre::{Message, SmtpTransport, Transport};
 
+fn secrets(path: &str) -> String {
+    return fs::read_to_string(path).map(|s| s.trim().to_string()).unwrap();
+}
 
 
 pub struct EmailMessage {
@@ -15,11 +18,12 @@ pub struct EmailMessage {
 
 impl EmailMessage {
     pub fn landing_page_email(data: CollectDataRequest) -> Self {
-        dotenv::dotenv().expect("Failed to read .env file");
+        let email_receiver = secrets("/run/secrets/email_receiver")
+        let smtp_email = secrets("/run/secrets/smtp_email")
 
         EmailMessage {
-            email_to: env::var("email_receiver").expect("error email_receiver"),
-            email_from: env::var("smtp_email").expect("error smtp_email"),
+            email_to:email_receiver,
+            email_from: smtp_email,
             email_subject: "Landing Page".to_string(),
             email_body: format!(
                 "New Client \n\n
@@ -36,12 +40,16 @@ impl EmailMessage {
 }
 
 fn open_conn_email() -> SmtpTransport {
+    let smtp_email = secrets("/run/secrets/smtp_email")
+    let smtp_key = secrets("/run/secrets/smtp_key")
+    let smtp_host = secrets("/run/secrets/smtp_host")
+    
     let admin_cred: Credentials = Credentials::new(
-        (env::var("smtp_email").expect("")).to_string().to_owned(),
-        (env::var("smtp_key").expect("")).to_owned(),
+        (smtp_email).to_string().to_owned(),
+        (smtp_key).to_owned(),
     );
 
-    return SmtpTransport::relay(&env::var("smtp_host").expect("").clone())
+    return SmtpTransport::relay(smtp_host.expect("").clone())
         .unwrap()
         .credentials(admin_cred)
         .build();
