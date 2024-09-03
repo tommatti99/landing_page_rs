@@ -196,6 +196,8 @@ name = "frontend"
 version = "0.1.0"
 dependencies = [
  "reqwest",
+ "serde",
+ "wasm-bindgen-futures",
  "web-sys",
  "yew",
 ]

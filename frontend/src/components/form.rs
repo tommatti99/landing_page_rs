@@ -1,7 +1,9 @@
+use std::collections::HashMap;
 use yew::prelude::*;
 use reqwest;
 use web_sys;
-
+use serde::Deserialize;
+use wasm_bindgen_futures::spawn_local;
 
 
 const LANDING_PAGE_API: &str = "/api/landing_page";
@@ -13,6 +15,7 @@ struct LandingPageRequest {
     already_have_the_product: bool,
     want_to_receive_more_info: bool
 } 
+#[derive(Deserialize, Debug)]
 struct LandingPageResponse {
     status: bool
 }
@@ -77,13 +80,23 @@ pub fn Form() -> Html {
     };
 
     let click_submit = {
-        let name = name.clone();
-        let telephone_number = telephone_number.clone();
-        let email = email.clone();
-        let already_have_the_product = already_have_the_product.clone();
-        let want_to_receive_more_info = want_to_receive_more_info.clone();
+        let state_clone_name = name.clone();
+        let state_clone_telephone_number = telephone_number.clone();
+        let state_clone_email = email.clone();
+        let state_clone_already_have_the_product = already_have_the_product.clone();
+        let state_clone_want_to_receive_more_info = want_to_receive_more_info.clone();
 
-        
+        Callback::from(move |_: MouseEvent| {
+            let name = (*state_clone_name).clone();
+            let telephone_number = (*state_clone_telephone_number).clone();
+            let email = (*state_clone_email).clone();
+            let already_have_the_product = (*state_clone_already_have_the_product).clone();
+            let want_to_receive_more_info = (*state_clone_want_to_receive_more_info).clone();
+
+            spawn_local(async move {
+                send_request_to_api(name, telephone_number, email, already_have_the_product, want_to_receive_more_info).await;
+            })
+        })
     };
 
     return html!{
@@ -110,14 +123,52 @@ pub fn Form() -> Html {
                     <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"Do you want to receive more information about our products?"}</h2>
                 <input type="checkbox" id="want_to_receive_more_info" checked={*want_to_receive_more_info} onclick={want_to_receive_more_info_input}  style={format!("transform: scale(1.5);")} />
                 </div>
-                <button style={format!("padding: 0.5em 1em; background-color: white; color: black; border: none; border-radius: 4px; cursor: pointer; font-size: 1em;")}>{"Submit"}</button>
+                <button onclick = {click_submit} style={format!("padding: 0.5em 1em; background-color: white; color: black; border: none; border-radius: 4px; cursor: pointer; font-size: 1em;")}>
+                {"Submit"}
+                </button>
             </div>
         </div>
     </div>
     
     };
 }
-/* 
-async fn send_data() -> Result {
-    let response = client
-}*/
+
+async fn send_request_to_api(colected_name: String, colected_telephone_number: String, colected_email: String, colected_already_have_the_product: String, colected_want_to_receive_more_info: bool) -> LandingPageResponse {
+    let client = reqwest::Client::new();
+    let mut body_map =  HashMap::new();
+    body_map.insert("name", colected_name);
+    body_map.insert("telephone_number", colected_telephone_number);
+    body_map.insert("email", colected_email);
+    body_map.insert("already_have_the_product", colected_already_have_the_product);
+    body_map.insert("want_to_receive_more_info", colected_want_to_receive_more_info.to_string());
+
+
+    match client
+        .post(LANDING_PAGE_API)
+        .json(&body_map)
+        .send()
+        .await {
+            Ok(response) => {
+                match response.json::<LandingPageResponse>().await {
+                    Ok(parsed_response) => {
+                        return 
+                            LandingPageResponse {
+                                status: parsed_response.status
+                            };
+                    },
+                    Err(_) => {
+                        return 
+                            LandingPageResponse {
+                                status: false
+                            };
+                    }
+                }
+            },
+            Err(_) => {
+                return 
+                    LandingPageResponse {
+                        status: false
+                    };
+            }
+        }
+    }
