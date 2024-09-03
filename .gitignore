@@ -1,0 +1,5 @@
+/.vscode
+/backend/.vscode
+/backend/target
+/frontend/.vscode
+/frontend/target
