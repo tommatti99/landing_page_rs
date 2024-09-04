@@ -1,32 +1,36 @@
 # ===============================================
 #                COMPILAR PROJETO
 # ===============================================
-# versao minima do debian 12 com rust 
+# Versão mínima do Debian 12 com Rust
 FROM rust:1.80-slim-bookworm AS builder
 
-# diretorio inicial do container
+# Diretório inicial do container
 WORKDIR /app
 
-# copiar arquivos necessarios
-COPY ..
+RUN apt-get update && apt-get install -y \
+    pkg-config \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# compilar o projeto
+# Copiar todos os arquivos do diretório atual para o diretório de trabalho do container
+COPY . .
+
+# Compilar o projeto
 RUN cargo build --locked --release
 # ====================================
  
 
-
 # ===============================================
 #                MONTAR CONTAINER
 # ===============================================
-# versao minima do debian 12 pro bin
+# Versão mínima do Debian 12 para o binário
 FROM debian:bookworm-slim
 
-# diretorio inicial do container
+# Diretório inicial do container
 WORKDIR /app
 
-# copia arquivos compilados
-COPY --from=builder /app/target/release/backend
+# Copia o binário compilado
+COPY --from=builder /app/target/release/backend /app/backend
 
-# executa binario
+# Executa o binário
 CMD ["./backend"]

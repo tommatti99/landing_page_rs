@@ -18,8 +18,8 @@ pub struct EmailMessage {
 
 impl EmailMessage {
     pub fn landing_page_email(data: CollectDataRequest) -> Self {
-        let email_receiver = secrets("/run/secrets/email_receiver")
-        let smtp_email = secrets("/run/secrets/smtp_email")
+        let email_receiver = secrets("/run/secrets/email_receiver");
+        let smtp_email = secrets("/run/secrets/smtp_email");
 
         EmailMessage {
             email_to:email_receiver,
@@ -40,16 +40,16 @@ impl EmailMessage {
 }
 
 fn open_conn_email() -> SmtpTransport {
-    let smtp_email = secrets("/run/secrets/smtp_email")
-    let smtp_key = secrets("/run/secrets/smtp_key")
-    let smtp_host = secrets("/run/secrets/smtp_host")
+    let smtp_email = secrets("/run/secrets/smtp_email");
+    let smtp_key = secrets("/run/secrets/smtp_key");
+    let smtp_host = secrets("/run/secrets/smtp_host");
     
     let admin_cred: Credentials = Credentials::new(
         (smtp_email).to_string().to_owned(),
         (smtp_key).to_owned(),
     );
 
-    return SmtpTransport::relay(smtp_host.expect("").clone())
+    return SmtpTransport::relay(&smtp_host.clone())
         .unwrap()
         .credentials(admin_cred)
         .build();

@@ -8,7 +8,7 @@ FROM rust:1.80.1-slim-bookworm AS builder
 WORKDIR /app
 
 # copiar arquivos necessarios
-COPY ..
+COPY . .
 
 # instala dependencias cargo
 RUN cargo install --locked trunk
@@ -26,7 +26,7 @@ FROM debian:bookworm-slim
 WORKDIR /app
 
 # copia arquivos da compilacao
-COPY --from=builder /app/dist
+COPY --from=builder /app/dist /app/frontend
 
 # expor porta 80
 EXPOSE 80

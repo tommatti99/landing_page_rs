@@ -102,7 +102,6 @@ checksum = "0c4b4d0bd25bd0b74681c0ad21497610ce1b7c91b1022cd21c80c6fbdd9476b0"
 name = "backend"
 version = "0.1.0"
 dependencies = [
- "dotenv",
  "lettre",
  "rocket",
  "serde",
@@ -254,12 +253,6 @@ dependencies = [
  "quote",
  "syn",
 ]
-
-[[package]]
-name = "dotenv"
-version = "0.15.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77c90badedccf4105eca100756a0b1289e191f6fcbdadd3cee1d2f614f97da8f"
 
 [[package]]
 name = "either"
