@@ -1,1 +1,0 @@
-/home/tommatti/Projects/landing_page_rs/frontend/target/wasm32-unknown-unknown/debug/frontend.wasm: /home/tommatti/Projects/landing_page_rs/frontend/src/components/footer.rs /home/tommatti/Projects/landing_page_rs/frontend/src/components/form.rs /home/tommatti/Projects/landing_page_rs/frontend/src/components/header.rs /home/tommatti/Projects/landing_page_rs/frontend/src/main.rs
