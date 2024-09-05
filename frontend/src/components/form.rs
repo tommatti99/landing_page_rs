@@ -6,7 +6,7 @@ use serde::Deserialize;
 use wasm_bindgen_futures::spawn_local;
 
 
-const LANDING_PAGE_API: &str = "/api/landing_page";
+const LANDING_PAGE_API: &str = "http://127.0.0.1:8000/api/landing_page";
 
 struct LandingPageRequest {
     name: String,

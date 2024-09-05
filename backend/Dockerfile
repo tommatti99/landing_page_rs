@@ -2,7 +2,7 @@
 #                COMPILAR PROJETO
 # ===============================================
 # Versão mínima do Debian 12 com Rust
-FROM rust:1.80-slim-bookworm AS builder
+FROM rust:bookworm as builder
 
 # Diretório inicial do container
 WORKDIR /app

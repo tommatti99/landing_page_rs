@@ -1,5 +1,0 @@
-secrets:
-    - smtp_host
-    - smtp_key
-    - smtp_email
-    - email_receiver

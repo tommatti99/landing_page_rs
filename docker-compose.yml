@@ -1,0 +1,36 @@
+services:
+    landing_page_backend:
+        build: 
+            context: ./backend
+            dockerfile: Dockerfile
+        image: landing_page_backend:v1.0
+        environment:
+            - smtp_host=${smtp_host}
+            - smtp_key=${smtp_key}
+            - smtp_email=${smtp_email}
+            - email_receiver=${email_receiver}
+        ports:
+            - 8080:8080
+
+
+
+    landing_page_frontend:
+        build: 
+            context: ./frontend
+            dockerfile: Dockerfile
+        image: landing_page_frontend:v1.0
+
+        ports:
+            - 3000:80
+
+
+
+secrets:
+    smtp_host:
+        external: true
+    smtp_key:
+        external: true
+    smtp_email:
+        external: true
+    email_receiver:
+        external: true

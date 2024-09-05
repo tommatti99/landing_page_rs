@@ -3,3 +3,4 @@
 /backend/target
 /frontend/.vscode
 /frontend/target
+/.env
