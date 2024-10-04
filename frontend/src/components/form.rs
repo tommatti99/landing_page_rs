@@ -63,7 +63,7 @@ pub fn Form() -> Html {
     
         Callback::from(move |e: InputEvent| {
             if let Some(input) = e.target_dyn_into::<web_sys::HtmlInputElement>() {
-                already_have_the_product.set(input.value());
+                already_have_the_product.set(input.checked());
         }
         })
     };
