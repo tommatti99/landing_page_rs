@@ -11,7 +11,7 @@ struct LandingPageRequest {
     name: String,
     telephone_number: String, 
     email: String,
-    already_have_the_product: bool,
+    already_have_the_product: String,
     want_to_receive_more_info: bool
 } 
 #[derive(Deserialize, Debug)]
@@ -26,7 +26,7 @@ pub fn Form() -> Html {
     let name = use_state(|| String::new());
     let telephone_number = use_state(|| String::new());
     let email = use_state(|| String::new());
-    let already_have_the_product = use_state(|| false);
+    let already_have_the_product = use_state(|| String::new());
     let want_to_receive_more_info = use_state(|| false);
 
     let name_input = {
@@ -63,7 +63,7 @@ pub fn Form() -> Html {
     
         Callback::from(move |e: InputEvent| {
             if let Some(input) = e.target_dyn_into::<web_sys::HtmlInputElement>() {
-                already_have_the_product.set(input.checked());
+                already_have_the_product.set(input.value());
         }
         })
     };
