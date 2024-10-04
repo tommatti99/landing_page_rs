@@ -1,13 +1,12 @@
 use std::collections::HashMap;
 use yew::prelude::*;
 use reqwest;
-use web_sys;
 use serde::Deserialize;
 use wasm_bindgen_futures::spawn_local;
 use std::env;
 
 
-const LANDING_PAGE_API: &str = env::var("LANDING_PAGE_API").expect("").to_string().to_owned();
+const LANDING_PAGE_API: &str = &env::var("LANDING_PAGE_API").expect("").to_string().to_owned();
 
 struct LandingPageRequest {
     name: String,
