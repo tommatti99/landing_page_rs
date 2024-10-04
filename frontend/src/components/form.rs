@@ -93,10 +93,10 @@ pub fn Form() -> Html {
                 email: (*state_clone_email).clone(),
                 already_have_the_product: (*state_clone_already_have_the_product).clone(),
                 want_to_receive_more_info: (*state_clone_want_to_receive_more_info).clone()
-            }
+            };
             spawn_local(async move {
                 send_request_to_api(request).await;
-            })
+            });
         })
     };
 
