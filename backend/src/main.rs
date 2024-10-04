@@ -12,9 +12,16 @@ use rocket::http::Method;
 
 #[launch]
 fn rocket() -> _ {
+    
+    let allowed_origins = AllowedOrigins::some(&[
+        "https://landing-page-rs.onrender.com/".into()
+    ]);
+
     let cors = CorsOptions::default()
+        .allowed_origins(allowed_origins)
         .allowed_methods(vec![Method::Post].into_iter().map(From::from).collect())
         .allow_credentials(true)
+        .allowed_headers(rocket_cors::AllowedHeaders::all())
         .to_cors()
         .expect("ERROR AT CORS");
 
