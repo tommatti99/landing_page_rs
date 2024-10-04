@@ -6,7 +6,6 @@ use wasm_bindgen_futures::spawn_local;
 use std::env;
 
 
-const LANDING_PAGE_API: &str = &env::var("LANDING_PAGE_API").expect("API ERROR");
 
 struct LandingPageRequest {
     name: String,
@@ -135,6 +134,7 @@ pub fn Form() -> Html {
 }
 
 async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse {
+    let LANDING_PAGE_API: &str = &env::var("LANDING_PAGE_API").expect("API ERROR");
     let client = reqwest::Client::new();
     let mut body_map =  HashMap::new();
     body_map.insert("name", request.name);
