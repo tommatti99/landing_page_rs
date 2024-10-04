@@ -13,7 +13,7 @@ use rocket::http::Method;
 #[launch]
 fn rocket() -> _ {
     
-    let allowed_origins = AllowedOrigins::some(
+    let allowed_origins = AllowedOrigins::some::<&str, &str>(
         &["https://landing-page-rs.onrender.com".into()],
         &[] 
     );
