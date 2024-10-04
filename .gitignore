@@ -1,6 +1,6 @@
 /.vscode
 /backend/.vscode
 /backend/target
+/backend/.env
 /frontend/.vscode
 /frontend/target
-/.env
