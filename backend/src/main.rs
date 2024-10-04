@@ -5,7 +5,7 @@ pub mod collect_api;
 pub mod collect_models;
 
 #[macro_use] extern crate rocket;
-use rocket_cors::{AllowedOrigins, CorsOptions};
+use rocket_cors::CorsOptions;
 use rocket::http::Method;
 
 
