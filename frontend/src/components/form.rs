@@ -6,7 +6,7 @@ use wasm_bindgen_futures::spawn_local;
 use std::env;
 
 
-const LANDING_PAGE_API: &str = &env::var("LANDING_PAGE_API").expect("").to_string().to_owned();
+const LANDING_PAGE_API: &str = &env::var("LANDING_PAGE_API").expect("API ERROR");
 
 struct LandingPageRequest {
     name: String,
