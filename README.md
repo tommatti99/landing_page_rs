@@ -1,5 +1,7 @@
 # Rust Landing Page
 
+## Its available at https://landing-page-rs.onrender.com/
+
 ## About
 
 It's just a simple landing page written entirely in rust.
