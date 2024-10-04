@@ -88,7 +88,7 @@ pub fn Form() -> Html {
         let state_clone_want_to_receive_more_info = want_to_receive_more_info.clone();
 
         Callback::from(move |_: MouseEvent| {
-            let request: LandingPageRequest {
+            let request: LandingPageRequest = LandingPageRequest {
                 name: (*state_clone_name).clone(),
                 telephone_number: (*state_clone_telephone_number).clone(),
                 email: (*state_clone_email).clone(),
