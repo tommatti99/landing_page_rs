@@ -77,14 +77,6 @@ pub fn Form() -> Html {
         }
         })
     };
-    
-fn string_to_bool(string: String) -> bool {
-    match string.to_lowercase().as_str() {
-        "true" => true,
-        "false" => false,
-        _ => false
-    }
-}
 
     let click_submit = {
         let state_clone_name = name.clone();
@@ -98,7 +90,7 @@ fn string_to_bool(string: String) -> bool {
                 name: (*state_clone_name).clone(),
                 telephone_number: (*state_clone_telephone_number).clone(),
                 email: (*state_clone_email).clone(),
-                already_have_the_product: string_to_bool((*state_clone_already_have_the_product).clone()),
+                already_have_the_product: (*state_clone_already_have_the_product).clone(),
                 want_to_receive_more_info: (*state_clone_want_to_receive_more_info).clone()
             };
             spawn_local(async move {
