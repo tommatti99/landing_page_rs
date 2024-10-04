@@ -134,7 +134,7 @@ pub fn Form() -> Html {
 }
 
 async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse {
-    let LANDING_PAGE_API: &str = &env::var("LANDING_PAGE_API").expect("API ERROR");
+    let landing_page_api: &str = &env::var("landing_page_api").expect("API ERROR");
     let client = reqwest::Client::new();
     let mut body_map =  HashMap::new();
     body_map.insert("name", request.name);
@@ -144,7 +144,7 @@ async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse
     body_map.insert("want_to_receive_more_info", request.want_to_receive_more_info.to_string());
     
     match client
-        .post(LANDING_PAGE_API)
+        .post(landing_page_api)
         .json(&body_map)
         .send()
         .await {
