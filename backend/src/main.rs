@@ -13,9 +13,10 @@ use rocket::http::Method;
 #[launch]
 fn rocket() -> _ {
     
-    let allowed_origins = AllowedOrigins::some(&[
-        "https://landing-page-rs.onrender.com".into(),
-    ]);
+    let allowed_origins = AllowedOrigins::some(
+        &["https://landing-page-rs.onrender.com".into()],
+        &[] 
+    );
 
     let cors = CorsOptions::default()
         .allowed_origins(allowed_origins)
