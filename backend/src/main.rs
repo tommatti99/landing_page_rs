@@ -14,12 +14,12 @@ use rocket::http::Method;
 fn rocket() -> _ {
     
     let allowed_origins = AllowedOrigins::some(&[
-        "https://landing-page-rs.onrender.com/".into()
+        "https://landing-page-rs.onrender.com".into(),
     ]);
 
     let cors = CorsOptions::default()
         .allowed_origins(allowed_origins)
-        .allowed_methods(vec![Method::Post].into_iter().map(From::from).collect())
+        .allowed_methods(vec![Method::Post, Method::Get].into_iter().map(From::from).collect())
         .allow_credentials(true)
         .allowed_headers(rocket_cors::AllowedHeaders::all())
         .to_cors()
