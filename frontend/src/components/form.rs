@@ -4,9 +4,10 @@ use reqwest;
 use web_sys;
 use serde::Deserialize;
 use wasm_bindgen_futures::spawn_local;
+use std::env;
 
 
-const LANDING_PAGE_API: &str = "http://127.0.0.1:8000/api/landing_page";
+const LANDING_PAGE_API: &str = env::var("LANDING_PAGE_API").expect("")).to_string().to_owned();
 
 struct LandingPageRequest {
     name: String,
@@ -87,14 +88,15 @@ pub fn Form() -> Html {
         let state_clone_want_to_receive_more_info = want_to_receive_more_info.clone();
 
         Callback::from(move |_: MouseEvent| {
-            let name = (*state_clone_name).clone();
-            let telephone_number = (*state_clone_telephone_number).clone();
-            let email = (*state_clone_email).clone();
-            let already_have_the_product = (*state_clone_already_have_the_product).clone();
-            let want_to_receive_more_info = (*state_clone_want_to_receive_more_info).clone();
-
+            let request: LandingPageRequest {
+                name: (*state_clone_name).clone(),
+                telephone_number: (*state_clone_telephone_number).clone(),
+                email: (*state_clone_email).clone(),
+                already_have_the_product: (*state_clone_already_have_the_product).clone(),
+                want_to_receive_more_info: (*state_clone_want_to_receive_more_info).clone()
+            }
             spawn_local(async move {
-                send_request_to_api(name, telephone_number, email, already_have_the_product, want_to_receive_more_info).await;
+                send_request_to_api(request).await;
             })
         })
     };
@@ -133,16 +135,15 @@ pub fn Form() -> Html {
     };
 }
 
-async fn send_request_to_api(colected_name: String, colected_telephone_number: String, colected_email: String, colected_already_have_the_product: String, colected_want_to_receive_more_info: bool) -> LandingPageResponse {
+async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse {
     let client = reqwest::Client::new();
     let mut body_map =  HashMap::new();
-    body_map.insert("name", colected_name);
-    body_map.insert("telephone_number", colected_telephone_number);
-    body_map.insert("email", colected_email);
-    body_map.insert("already_have_the_product", colected_already_have_the_product);
-    body_map.insert("want_to_receive_more_info", colected_want_to_receive_more_info.to_string());
-
-
+    body_map.insert("name", request.name);
+    body_map.insert("telephone_number", request.telephone_number);
+    body_map.insert("email", request.email);
+    body_map.insert("already_have_the_product", request.already_have_the_product);
+    body_map.insert("want_to_receive_more_info", request.want_to_receive_more_info.to_string());
+    
     match client
         .post(LANDING_PAGE_API)
         .json(&body_map)
