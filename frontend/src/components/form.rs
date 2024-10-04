@@ -26,7 +26,7 @@ pub fn Form() -> Html {
     let name = use_state(|| String::new());
     let telephone_number = use_state(|| String::new());
     let email = use_state(|| String::new());
-    let already_have_the_product = use_state(|| String::new());
+    let already_have_the_product = use_state(|| false);
     let want_to_receive_more_info = use_state(|| false);
 
     let name_input = {
@@ -99,7 +99,7 @@ fn string_to_bool(string: String) -> bool {
                 telephone_number: (*state_clone_telephone_number).clone(),
                 email: (*state_clone_email).clone(),
                 already_have_the_product: string_to_bool((*state_clone_already_have_the_product).clone()),
-                want_to_receive_more_info: string_to_bool((*state_clone_want_to_receive_more_info).clone())
+                want_to_receive_more_info: (*state_clone_want_to_receive_more_info).clone()
             };
             spawn_local(async move {
                 send_request_to_api(request).await;
