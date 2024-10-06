@@ -11,8 +11,8 @@ use crate::collect_models::{CollectDataRequest, CollectDataResponse};
 //              name: String,
 //              telephone_number: String,
 //              email: String,
-//              want_to_receive_more_info: bool,
-//              already_have_the_product: bool
+//              already_have_the_product: String,
+//              want_to_receive_more_info: bool
 //          }
 //    
 // RESPONSE:
