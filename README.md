@@ -14,7 +14,11 @@ It will send the input data to the email set.
 ## Repository Struct
 
 ### Backend
-  - You can set your smtp configurations and wich email will receive the messages at backend/.env file.
+  - You can set your configurations at environment variables.
+     * email_receiver: who will receive all the leads
+     * smtp_email: email adress that sends the emails
+     * smtp_host: the email smtp service host
+     * smtp_key: the key to autenticate on the smtp
 
 ### Frontend
   - You can also set a different background at frontend/static.
