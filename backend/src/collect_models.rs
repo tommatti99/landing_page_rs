@@ -6,8 +6,8 @@ pub struct CollectDataRequest {
     pub name: String,
     pub telephone_number: String,
     pub email: String,
-    pub want_to_receive_more_info: bool,
-    pub already_have_the_product: bool
+    pub already_have_the_product: String,
+    pub want_to_receive_more_info: bool
 }
 
 #[derive(Serialize, Deserialize)]
