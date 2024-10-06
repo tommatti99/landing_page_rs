@@ -7,7 +7,7 @@ pub struct CollectDataRequest {
     pub telephone_number: String,
     pub email: String,
     pub already_have_the_product: String,
-    pub want_to_receive_more_info: bool
+    pub want_to_receive_more_info: String
 }
 
 #[derive(Serialize, Deserialize)]
