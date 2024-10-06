@@ -1,6 +1,7 @@
 # Rust Landing Page
 
 ## Its available at https://landing-page-rs.onrender.com/
+It will take a little while because the server turns off when pass some time without activity, but WAIT, and send me a message :) 
 
 ## About
 
