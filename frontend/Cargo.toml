@@ -9,7 +9,7 @@ reqwest = { version = "0.12.7", features = ["json"] }
 web-sys = { version = "0.3.70", features = ["Window", "HtmlInputElement"] }
 serde = "1.0.209"
 wasm-bindgen-futures = "0.4.43"
-
+lazy_static = "1.5.0"
 
 [profile.release]
 lto = "fat" 
