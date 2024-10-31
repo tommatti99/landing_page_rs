@@ -149,7 +149,7 @@ async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse
     body_map.insert("want_to_receive_more_info", request.want_to_receive_more_info.to_string());
     
     match client
-        .post(LANDING_PAGE_API_LINK)
+        .post(&*LANDING_PAGE_API_LINK)
         .json(&body_map)
         .send()
         .await {
