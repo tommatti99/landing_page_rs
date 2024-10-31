@@ -4,8 +4,13 @@ use yew::prelude::*;
 use reqwest;
 use serde::Deserialize;
 use wasm_bindgen_futures::spawn_local;
+use lazy_static::lazy_static;
 
-const LANDING_PAGE_API_LINK = env::var("LANDING_PAGE_API").expect("API MUST BE SET");
+
+lazy_static! {
+    static ref LANDING_PAGE_API_LINK: String = env::var("LANDING_PAGE_API")
+        .expect("API MUST BE SET");
+}
 
 struct LandingPageRequest {
     name: String,
