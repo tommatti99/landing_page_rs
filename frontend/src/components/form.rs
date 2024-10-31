@@ -133,7 +133,7 @@ pub fn Form() -> Html {
 }
 
 async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse {
-    let landing_page_api = env::var("LANDING_PAGE_API").expect("API MUST BE SET");;
+    let landing_page_api = env::var("LANDING_PAGE_API").expect("API MUST BE SET");
     let client = reqwest::Client::new();
     let mut body_map =  HashMap::new();
     body_map.insert("name", request.name);
