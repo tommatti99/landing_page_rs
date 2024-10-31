@@ -1,3 +1,4 @@
+use std::env;
 use std::collections::HashMap;
 use yew::prelude::*;
 use reqwest;
@@ -132,7 +133,7 @@ pub fn Form() -> Html {
 }
 
 async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse {
-    let landing_page_api = "https://landing-page-rs-backend.onrender.com/api/landing_page";
+    let landing_page_api = env::var("LANDING_PAGE_API").expect("API MUST BE SET");;
     let client = reqwest::Client::new();
     let mut body_map =  HashMap::new();
     body_map.insert("name", request.name);
