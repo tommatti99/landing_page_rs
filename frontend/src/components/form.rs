@@ -5,6 +5,7 @@ use reqwest;
 use serde::Deserialize;
 use wasm_bindgen_futures::spawn_local;
 
+const LANDING_PAGE_API_LINK = env::var("LANDING_PAGE_API").expect("API MUST BE SET");
 
 struct LandingPageRequest {
     name: String,
@@ -133,7 +134,7 @@ pub fn Form() -> Html {
 }
 
 async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse {
-    let landing_page_api = env::var("LANDING_PAGE_API").expect("API MUST BE SET");
+    
     let client = reqwest::Client::new();
     let mut body_map =  HashMap::new();
     body_map.insert("name", request.name);
@@ -143,7 +144,7 @@ async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse
     body_map.insert("want_to_receive_more_info", request.want_to_receive_more_info.to_string());
     
     match client
-        .post(landing_page_api)
+        .post(LANDING_PAGE_API_LINK)
         .json(&body_map)
         .send()
         .await {
