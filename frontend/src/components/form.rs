@@ -1,4 +1,3 @@
-use std::env;
 use std::collections::HashMap;
 use yew::prelude::*;
 use reqwest;
@@ -143,7 +142,7 @@ async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse
     body_map.insert("want_to_receive_more_info", request.want_to_receive_more_info.to_string());
     
     match client
-        .post(landing_page_api_link)
+        .post(landing_page_api)
         .json(&body_map)
         .send()
         .await {
