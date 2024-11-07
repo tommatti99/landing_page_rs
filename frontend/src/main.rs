@@ -11,7 +11,7 @@ pub mod components {
 #[function_component(Main)]
 pub fn app() -> Html {
     return html! {
-        <div style = {format!("background-image: url('/static/leaves_background.png'); background-repeat: no-repeat;  background-size: cover; background-position: center;  margin-left: -8em; height: 110vh; width: 110vw;")}>
+        <div style = {format!("")}>
             <Header/>
             <Form/>
             <Footer/>

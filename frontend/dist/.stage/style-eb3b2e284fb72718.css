@@ -1,0 +1,8 @@
+body {
+    background-image: url('/static/leaves_background.png'); 
+    background-repeat: no-repeat;  
+    background-size: cover; 
+    background-position: center;  
+    overflow-x: hidden;  
+    overflow-y: hidden;
+}
