@@ -1,5 +1,5 @@
 use yew::prelude::*;
-use crate::components::{footer::Footer, form::Form, form::ResultBox, header::Header};
+use crate::components::{footer::Footer, form::Form, header::Header};
 
 pub mod components {
     pub mod footer;

@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use yew::{prelude::*, virtual_dom::VNode};
+use yew::prelude::*;
 use reqwest;
 use serde::Deserialize;
 use wasm_bindgen_futures::spawn_local;
@@ -99,7 +99,7 @@ pub fn Form() -> Html {
             };
 
             spawn_local(async move {
-                let msg = send_request_to_api(request).await 
+                let msg = send_request_to_api(request).await;
                 res_window_msg.set(msg);
                 res_window_state.set(true);
             });
