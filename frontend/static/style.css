@@ -7,7 +7,24 @@ body {
     overflow-y: hidden;
 }
 
-.result {
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: none;
+}
+
+.result_box {
     background-color: white;
     color: black;
+    width: 7em;
+    height: 4em;
+}
+
+.result_box + .overlay {
+    display: block;
 }

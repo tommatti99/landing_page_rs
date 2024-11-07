@@ -16,44 +16,6 @@ struct LandingPageResponse {
     status: bool
 }
 
-#[derive(Properties)]
-enum RequestResult {
-    Success(String),
-    Error(String)
-}
-
-#[function_component] 
-pub fn ResultBox(props: &RequestResult) -> Html {
-
-    let res_window_state: UseStateHandle<bool> = use_state(|| false);
-
-    let res_window_state_toggle: Callback<MouseEvent> = {
-        let res_window_state = res_window_state.clone();
-        Callback::from(move |_| res_window_state.set(!*res_window_state))
-    };
-
-    match props {
-        RequestResult::Success(msg) => {
-            html!{
-                <>
-                <div class ="result_box">
-                    <h2>{"msg"}</h2>
-                    <button onclick = {res_window_state_toggle} style={format!("padding: 0.5em 1em; background-color: white; color: black; border: none; border-radius: 4px; cursor: pointer; font-size: 1em;")}>
-                        {"Ok!"}
-                    </button>
-                </div>
-                <div class="overlay"></div>
-               </>
-           }
-        }
-        RequestResult::Error(msg) => {
-            html!{
-                <div>            
-                </div>
-             }
-       } 
-    };
-}
 
 #[function_component]
 pub fn Form() -> Html {
@@ -62,8 +24,10 @@ pub fn Form() -> Html {
     let telephone_number = use_state(|| String::new());
     let email = use_state(|| String::new());
     let already_have_the_product = use_state(|| String::new());
+    let res_window_msg = use_state(|| String::new());
     let want_to_receive_more_info = use_state(|| false);
-
+    let res_window_state = use_state(|| false);
+    
     let name_input = {
         let name = name.clone();
 
@@ -113,6 +77,11 @@ pub fn Form() -> Html {
         })
     };
 
+    let res_window_state_toggle: Callback<MouseEvent> = {
+        let res_window_state = res_window_state.clone();
+        Callback::from(move |_| res_window_state.set(!*res_window_state))
+    };
+
     let click_submit = {
         let state_clone_name = name.clone();
         let state_clone_telephone_number = telephone_number.clone();
@@ -130,7 +99,9 @@ pub fn Form() -> Html {
             };
 
             spawn_local(async move {
-                send_request_to_api(request).await
+                let msg = send_request_to_api(request).await 
+                res_window_msg.set(msg);
+                res_window_state.set(true);
             });
         })
     };
@@ -164,12 +135,24 @@ pub fn Form() -> Html {
                 </button>
             </div>
         </div>
+        {if *res_window_state {
+                html!{
+                    <>
+                        <div class ="result_box">
+                            <h2>{ (*res_window_msg).clone() }</h2>
+                            <button onclick = {res_window_state_toggle} style={format!("padding: 0.5em 1em; background-color: white; color: black; border: none; border-radius: 4px; cursor: pointer; font-size: 1em;")}>
+                                {"Ok!"}
+                            </button>
+                        </div>
+                        <div class="overlay"></div>
+                </>
+           }
+        }}
     </div>
-    /// EXIBIR AKI A CAIXA
     };
 }
 
-async fn send_request_to_api(request: LandingPageRequest) {
+async fn send_request_to_api(request: LandingPageRequest) -> String {
     let landing_page_api = "https://landing-page-rs-backend.onrender.com/api/landing_page";
     
     let client = reqwest::Client::new();
@@ -190,19 +173,19 @@ async fn send_request_to_api(request: LandingPageRequest) {
                 match response.json::<LandingPageResponse>().await {
                     Ok(parsed_response) => {
                         if parsed_response.status {
-                            RequestResult::Success("Requisição bem-sucedida".to_string())
+                            "Requisição bem-sucedida".to_string()
                         } else {
-                            RequestResult::Error("Requisição Falhou".to_string())
+                            "Requisição Falhou".to_string()
                         }
                     },
 
                     Err(_) => {
-                        RequestResult::Error("Requisição Falhou".to_string())
+                        "Requisição Falhou".to_string()
                     }
                 }
             },
             Err(_) => {
-                RequestResult::Error("Requisição Falhou".to_string())
+                "Requisição Falhou".to_string()
             }
         }
     }
