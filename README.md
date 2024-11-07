@@ -1,7 +1,7 @@
 # Rust Landing Page
 
 ## Its available at https://landing-page-rs.onrender.com/
-It will take a little while because the server turns off when pass some time without activity, but WAIT, and send me a message :) 
+It will take a little while because the server turns off when pass some time without activity, but WAIT, will be very cool :) 
 
 ## About
 
@@ -15,7 +15,6 @@ It will send the input data to the email set.
 
 ### Backend
   - You can set your configurations at environment variables.
-     * email_receiver: who will receive all the leads
      * smtp_email: email adress that sends the emails
      * smtp_host: the email smtp service host
      * smtp_key: the key to autenticate on the smtp
