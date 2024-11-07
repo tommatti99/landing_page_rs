@@ -13,7 +13,6 @@ pub fn app() -> Html {
     return html! {
         <div>
             <Header/>
-            <ResultBox/>
             <Form/>
             <Footer/>
         </div>
