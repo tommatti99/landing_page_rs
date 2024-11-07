@@ -16,7 +16,7 @@ impl EmailMessage {
     pub fn landing_page_email(data: CollectDataRequest) -> Self {
 
         EmailMessage {
-            email_to: data.email,
+            email_to: data.email.clone(),
             email_from: env::var("smtp_email").expect("error smtp_email"),
             email_subject: "Landing Page Test".to_string(),
             email_body: format!(
