@@ -135,7 +135,8 @@ pub fn Form() -> Html {
                 </button>
             </div>
         </div>
-        {if *res_window_state {
+        { 
+            if *res_window_state {
                 html!{
                     <>
                         <div class ="result_box">
@@ -145,9 +146,12 @@ pub fn Form() -> Html {
                             </button>
                         </div>
                         <div class="overlay"></div>
-                </>
-           }
-        }}
+                    </>
+                }
+            } else {
+                html!{} 
+            }
+        }
     </div>
     };
 }
