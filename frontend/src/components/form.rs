@@ -88,6 +88,8 @@ pub fn Form() -> Html {
         let state_clone_email = email.clone();
         let state_clone_already_have_the_product = already_have_the_product.clone();
         let state_clone_want_to_receive_more_info = want_to_receive_more_info.clone();
+        let res_window_msg = res_window_msg.clone();
+        let res_window_state = res_window_state.clone();
 
         Callback::from(move |_: MouseEvent| {
             let request: LandingPageRequest = LandingPageRequest {
