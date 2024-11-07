@@ -1,5 +1,5 @@
 use yew::prelude::*;
-use crate::components::{footer::Footer, form::Form, header::Header};
+use crate::components::{footer::Footer, form::Form, form::ResultBox, header::Header};
 
 pub mod components {
     pub mod footer;
@@ -11,8 +11,9 @@ pub mod components {
 #[function_component(Main)]
 pub fn app() -> Html {
     return html! {
-        <div style = {format!("")}>
+        <div>
             <Header/>
+            <ResultBox/>
             <Form/>
             <Footer/>
         </div>

@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use yew::prelude::*;
+use yew::{prelude::*, virtual_dom::VNode};
 use reqwest;
 use serde::Deserialize;
 use wasm_bindgen_futures::spawn_local;
@@ -16,6 +16,44 @@ struct LandingPageResponse {
     status: bool
 }
 
+#[derive(Properties)]
+enum RequestResult {
+    Success(String),
+    Error(String)
+}
+
+#[function_component] 
+pub fn ResultBox(props: &RequestResult) -> Html {
+
+    let res_window_state: UseStateHandle<bool> = use_state(|| false);
+
+    let res_window_state_toggle: Callback<MouseEvent> = {
+        let res_window_state = res_window_state.clone();
+        Callback::from(move |_| res_window_state.set(!*res_window_state))
+    };
+
+    match props {
+        RequestResult::Success(msg) => {
+            html!{
+                <>
+                <div class ="result_box">
+                    <h2>{"msg"}</h2>
+                    <button onclick = {res_window_state_toggle} style={format!("padding: 0.5em 1em; background-color: white; color: black; border: none; border-radius: 4px; cursor: pointer; font-size: 1em;")}>
+                        {"Ok!"}
+                    </button>
+                </div>
+                <div class="overlay"></div>
+               </>
+           }
+        }
+        RequestResult::Error(msg) => {
+            html!{
+                <div>            
+                </div>
+             }
+       } 
+    };
+}
 
 #[function_component]
 pub fn Form() -> Html {
@@ -90,8 +128,9 @@ pub fn Form() -> Html {
                 already_have_the_product: (*state_clone_already_have_the_product).clone(),
                 want_to_receive_more_info: (*state_clone_want_to_receive_more_info).clone()
             };
+
             spawn_local(async move {
-                send_request_to_api(request).await;
+                send_request_to_api(request).await
             });
         })
     };
@@ -126,11 +165,11 @@ pub fn Form() -> Html {
             </div>
         </div>
     </div>
-    
+    /// EXIBIR AKI A CAIXA
     };
 }
 
-async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse {
+async fn send_request_to_api(request: LandingPageRequest) {
     let landing_page_api = "https://landing-page-rs-backend.onrender.com/api/landing_page";
     
     let client = reqwest::Client::new();
@@ -141,6 +180,7 @@ async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse
     body_map.insert("already_have_the_product", request.already_have_the_product.to_string());
     body_map.insert("want_to_receive_more_info", request.want_to_receive_more_info.to_string());
     
+
     match client
         .post(landing_page_api)
         .json(&body_map)
@@ -149,24 +189,20 @@ async fn send_request_to_api(request: LandingPageRequest) -> LandingPageResponse
             Ok(response) => {
                 match response.json::<LandingPageResponse>().await {
                     Ok(parsed_response) => {
-                        return 
-                            LandingPageResponse {
-                                status: parsed_response.status
-                            };
+                        if parsed_response.status {
+                            RequestResult::Success("Requisição bem-sucedida".to_string())
+                        } else {
+                            RequestResult::Error("Requisição Falhou".to_string())
+                        }
                     },
+
                     Err(_) => {
-                        return 
-                            LandingPageResponse {
-                                status: false
-                            };
+                        RequestResult::Error("Requisição Falhou".to_string())
                     }
                 }
             },
             Err(_) => {
-                return 
-                    LandingPageResponse {
-                        status: false
-                    };
+                RequestResult::Error("Requisição Falhou".to_string())
             }
         }
     }
