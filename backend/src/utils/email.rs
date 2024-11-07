@@ -16,12 +16,19 @@ impl EmailMessage {
     pub fn landing_page_email(data: CollectDataRequest) -> Self {
 
         EmailMessage {
-            email_to: env::var("email_receiver").expect("error email_receiver"),
+            email_to: data.email,
             email_from: env::var("smtp_email").expect("error smtp_email"),
-            email_subject: "Landing Page".to_string(),
+            email_subject: "Landing Page Test".to_string(),
             email_body: format!(
-                "New Client \n\n
+                "Hello! :D \n\n
+                 
+                 Its just a test,\n
+                 It was sent by https://landing-page-rs.onrender.com/\n
+                 The full project can be found at https://github.com/tommatti99/landing_page_rs/\n
+                 
 
+                 Its your input data:\n\n
+                 
                  name: {}\n
                  telephone_number: {}\n
                  email: {}\n

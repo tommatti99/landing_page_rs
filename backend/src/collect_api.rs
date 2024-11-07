@@ -26,7 +26,7 @@ use crate::collect_models::{CollectDataRequest, CollectDataResponse};
 #[post("/landing_page", format = "json", data = "<json_data>")]
 pub fn collect_data_api(json_data: Json<CollectDataRequest>) -> Json<CollectDataResponse> {
     let data: CollectDataRequest = json_data.into_inner();
-
+    
     return Json(CollectDataResponse::send_info(data));
 }
 //=================================================================================
