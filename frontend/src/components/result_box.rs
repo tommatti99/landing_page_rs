@@ -36,7 +36,7 @@ impl Component for ResultBox {
 
     fn view(&self, _ctx: &Context<Self>) -> Html {
         let hide = {
-            Callback::from(move |_: MouseEvent {Msg::HideResultBox})
+            Callback::from(move |_: MouseEvent {Msg::HideResultBox});
         };
         
         html! {
