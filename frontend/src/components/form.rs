@@ -3,7 +3,7 @@ use yew::prelude::*;
 use reqwest;
 use serde::Deserialize;
 use wasm_bindgen_futures::spawn_local;
-use crate::components::result_box::{ResultBoxProps, ResultBox};
+use crate::components::result_box::ResultBox;
 
 struct LandingPageRequest {
     name: String,
@@ -26,7 +26,7 @@ pub fn Form() -> Html {
     let already_have_the_product = use_state(|| String::new());
     let want_to_receive_more_info = use_state(|| false); 
     
-    let res_box = use_state(|| ResultBoxProps {on: false, text: "".to_string()}); 
+    let res_box = use_state(|| ResultBox {on: false, text: "".to_string()}); 
 
     let name_input = {
         let name = name.clone();
@@ -98,7 +98,7 @@ pub fn Form() -> Html {
 
             spawn_local(async move {
                 let msg = send_request_to_api(request).await;
-                res_box.set(ResultBoxProps {on: true, text: msg});
+                res_box.set(ResultBox {on: true, text: msg});
             });
         })
     };

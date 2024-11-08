@@ -1,12 +1,6 @@
 use yew::prelude::*;
 
 
-#[derive(Properties, Part_Eq, Eq, Clone)]
-pub struct ResultBoxProps {
-    pub on: bool,
-    pub text: String
-}
-
 pub struct ResultBox {    
     pub on: bool,
     pub text: String
@@ -21,26 +15,26 @@ impl Component for ResultBox {
     type Message = Msg;
     type Properties = Props;
 
-    fn create(ctx: &Context<Self>) -> Self {
+    fn create(_ctx: &Context<Self>) -> Self {
         Self {
-            on: ctx.on,
-            text: ctx.text
+            self.on = false;
+            self.text = "".to_string();
         }
     }
 
-    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
 
             Msg::HideResultBox => {
-                self.text = "".to_string();
                 self.on = false;
+                self.text = "".to_string();
             }
         }
         
         true
     }
 
-    fn view(&self, ctx: &Context<Self>) -> Html {
+    fn view(&self, _ctx: &Context<Self>) -> Html {
         let hide = {
             Callback::from(move |_: MouseEvent {Msg::HideResultBox})
         };
