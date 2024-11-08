@@ -5,6 +5,7 @@ pub mod components {
     pub mod footer;
     pub mod form;
     pub mod header;
+    pub mod result_box;
 }
 
 

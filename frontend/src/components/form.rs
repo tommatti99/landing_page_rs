@@ -3,6 +3,7 @@ use yew::prelude::*;
 use reqwest;
 use serde::Deserialize;
 use wasm_bindgen_futures::spawn_local;
+use crate::components::result_box::{ResultBoxProps, ResultBox};
 
 struct LandingPageRequest {
     name: String,
