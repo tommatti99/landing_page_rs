@@ -131,15 +131,7 @@ pub fn Form() -> Html {
                 </button>
             </div>
         </div>
-        { 
-            if *res_box.on {
-                html!{
-                    <ResultBox on={*res_box.on} text={*res_box.text} />
-                }
-            } else {
-                html!{} 
-            }
-        }
+        <ResultBox on={(*res_box).on} text={(*res_box).text.clone()} />
     </div>
     };
 }
