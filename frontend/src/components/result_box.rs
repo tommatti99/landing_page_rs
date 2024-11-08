@@ -2,14 +2,14 @@ use yew::prelude::*;
 
 
 #[derive(Properties, Part_Eq, Eq, Clone)]
-struct ResultBoxProps {
-    on: bool,
-    text: String
+pub struct ResultBoxProps {
+    pub on: bool,
+    pub text: String
 }
 
-struct ResultBox {    
-    on: bool,
-    text: String
+pub struct ResultBox {    
+    pub on: bool,
+    pub text: String
 }       
 
 enum Msg {
