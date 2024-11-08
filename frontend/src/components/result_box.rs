@@ -17,8 +17,8 @@ impl Component for ResultBox {
 
     fn create(_ctx: &Context<Self>) -> Self {
         Self {
-            self.on = false,
-            self.text = "".to_string()
+            on = false,
+            text = "".to_string()
         }
     }
 
