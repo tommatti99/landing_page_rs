@@ -9,6 +9,7 @@ pub struct ResultBox {
 enum Msg {
     HideResultBox   
 }
+enum Props{}
 
 impl Component for ResultBox {
     
