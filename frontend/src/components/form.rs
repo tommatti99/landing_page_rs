@@ -177,20 +177,20 @@ async fn send_request_to_api(request: LandingPageRequest) -> String {
             Ok(response) => {
                 match response.json::<LandingPageResponse>().await {
                     Ok(parsed_response) => {
-                        if parsed_response.status {
+                        if parsed_response.success {
                             "Requisição bem-sucedida".to_string()
                         } else {
-                            "Requisição Falhou 1".to_string()
+                            "Requisição Falhou".to_string()
                         }
                     },
 
                     Err(e) => {
-                        format!("Requisição Falhou 2: {}", e)
+                        format!("Requisição Falhou: {}", e)
                     }
                 }
             },
             Err(e) => {
-                format!("Requisição Falhou 3: {}", e)
+                format!("Requisição Falhou: {}", e)
             }
         }
     }
