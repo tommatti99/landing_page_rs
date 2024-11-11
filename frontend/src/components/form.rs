@@ -5,6 +5,7 @@ use serde::Deserialize;
 use wasm_bindgen_futures::spawn_local;
 use crate::components::result_box::ResultBox;
 
+
 struct LandingPageRequest {
     name: String,
     telephone_number: String, 
@@ -12,7 +13,7 @@ struct LandingPageRequest {
     already_have_the_product: String,
     want_to_receive_more_info: bool
 } 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 struct LandingPageResponse {
     success: bool
 }
@@ -169,28 +170,23 @@ async fn send_request_to_api(request: LandingPageRequest) -> String {
     body_map.insert("want_to_receive_more_info", request.want_to_receive_more_info.to_string());
     
 
-    match client
+    let response = client
         .post(landing_page_api)
         .json(&body_map)
         .send()
-        .await {
-            Ok(response) => {
-                match response.json::<LandingPageResponse>().await {
-                    Ok(parsed_response) => {
-                        if parsed_response.success {
-                            "Requisição bem-sucedida".to_string()
-                        } else {
-                            "Requisição Falhou".to_string()
-                        }
-                    },
+        .await;
 
-                    Err(e) => {
-                        format!("Requisição Falhou: {}", e)
-                    }
+    match response {
+        Ok(res) => {
+            let deserealized_res: LandingPageResponse = serde_json::from_str(&res.text().await.unwrap()).unwrap();
+                if deserealized_res.success {
+                    "Requisição bem-sucedida".to_string()
+                } else {
+                    "Requisição Falhou".to_string()
                 }
-            },
-            Err(e) => {
-                format!("Requisição Falhou: {}", e)
-            }
+        },
+        Err(e) => {
+            format!("Requisição Falhou: {}", e)
         }
     }
+}
