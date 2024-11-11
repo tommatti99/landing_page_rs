@@ -1,54 +1,61 @@
 use yew::prelude::*;
 
+#[derive(Properties, PartialEq, Clone)]
+pub struct ResultBoxProps {
+    pub text: String
+}
 
 pub struct ResultBox {    
-    pub on: bool,
-    pub text: String
+    pub on: bool
 }       
 
-enum Msg {
+pub enum Msg {
     HideResultBox   
 }
-enum Props{}
 
 impl Component for ResultBox {
     
     type Message = Msg;
-    type Properties = Props;
+    type Properties = ResultBoxProps;
 
     fn create(_ctx: &Context<Self>) -> Self {
         Self {
-            on = false,
-            text = "".to_string()
+            on: true
         }
     }
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
-
             Msg::HideResultBox => {
                 self.on = false;
-                self.text = "".to_string();
+                web_sys::window().unwrap().location().reload().unwrap();
             }
         }
         
         true
     }
 
-    fn view(&self, _ctx: &Context<Self>) -> Html {
-        let hide = {
-            Callback::from(move |_: MouseEvent {Msg::HideResultBox});
-        };
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let hide = ctx.link().callback(|_: MouseEvent| Msg::HideResultBox);
         
         html! {
             <>
-                <div class ="result_box">
-                    <h2>{ (self.text).clone() }</h2>
-                    <button onclick = {toggle} style={format!("padding: 0.5em 1em; background-color: white; color: black; border: none; border-radius: 4px; cursor: pointer; font-size: 1em;")}>
-                        {"Ok!"}
-                    </button>
-                </div>
-                <div class="overlay"></div>
+                { 
+                if self.on {
+                    html! {
+                        <div>
+                            <div class="result_box">
+                                <h2>{ (&ctx.props().text).clone() }</h2>
+                                <button onclick = {hide} style={format!("width: 5em; height: 2em; display: flex; outline: none; align-content: center; align-items: center; justify-content: center; background-color: white; color: black; border: 1px, solid, black; border-radius: 4px; cursor: pointer; font-size: 1em;")}>
+                                    {"Ok!"}
+                                </button>
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+                }} else {
+                    html! {<div></div>}
+                    }
+                }
             </>
         }
     }

@@ -17,6 +17,10 @@ struct LandingPageResponse {
     status: bool
 }
 
+struct ResBoxState {
+    on: bool,
+    text: String
+}
 
 #[function_component]
 pub fn Form() -> Html {
@@ -26,7 +30,7 @@ pub fn Form() -> Html {
     let already_have_the_product = use_state(|| String::new());
     let want_to_receive_more_info = use_state(|| false); 
     
-    let res_box = use_state(|| ResultBox {on: false, text: "".to_string()}); 
+    let res_box = use_state(|| ResBoxState {on: false, text: "".to_string()}); 
 
     let name_input = {
         let name = name.clone();
@@ -86,6 +90,7 @@ pub fn Form() -> Html {
         let state_clone_want_to_receive_more_info = want_to_receive_more_info.clone();
 
         let res_box = res_box.clone(); 
+    
 
         Callback::from(move |_: MouseEvent| {
             let request: LandingPageRequest = LandingPageRequest {
@@ -96,10 +101,13 @@ pub fn Form() -> Html {
                 want_to_receive_more_info: (*state_clone_want_to_receive_more_info).clone()
             };
 
+            let res_box = res_box.clone(); 
+            
             spawn_local(async move {
                 let msg = send_request_to_api(request).await;
-                res_box.set(ResultBox {on: true, text: msg});
+                res_box.set(ResBoxState {on: true, text: msg});
             });
+            
         })
     };
 
@@ -132,7 +140,17 @@ pub fn Form() -> Html {
                 </button>
             </div>
         </div>
-        <ResultBox on={(*res_box).on} text={(*res_box).text.clone()} />
+        {   if res_box.on {
+                html!{
+                    <ResultBox text={(*res_box).text.clone()} />
+                }
+            } else {
+
+                html!{
+                    <div></div>
+                }
+            }
+        }
     </div>
     };
 }

@@ -3,4 +3,41 @@ body {
     background-repeat: no-repeat;  
     background-size: cover; 
     background-position: center;  
+    overflow-x: hidden;  
+    overflow-y: hidden;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: none;
+}
+
+.result_box {
+    position: absolute;
+    background-color: white;
+    color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 21em;
+    height: 10em;
+    z-index: 200;
+    border-radius: 8px;
+    
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.result_box + .overlay {
+    display: block;
 }
