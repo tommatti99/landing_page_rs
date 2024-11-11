@@ -14,7 +14,7 @@ struct LandingPageRequest {
 } 
 #[derive(Deserialize, Debug)]
 struct LandingPageResponse {
-    status: bool
+    success: bool
 }
 
 struct ResBoxState {
