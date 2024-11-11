@@ -180,17 +180,17 @@ async fn send_request_to_api(request: LandingPageRequest) -> String {
                         if parsed_response.status {
                             "Requisição bem-sucedida".to_string()
                         } else {
-                            "Requisição Falhou".to_string()
+                            "Requisição Falhou 1".to_string()
                         }
                     },
 
-                    Err(_) => {
-                        "Requisição Falhou".to_string()
+                    Err(e) => {
+                        format!("Requisição Falhou 2: {}", e)
                     }
                 }
             },
-            Err(_) => {
-                "Requisição Falhou".to_string()
+            Err(e) => {
+                format!("Requisição Falhou 3: {}", e)
             }
         }
     }
