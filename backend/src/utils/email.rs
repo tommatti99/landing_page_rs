@@ -20,22 +20,23 @@ impl EmailMessage {
             email_from: env::var("smtp_email").expect("error smtp_email"),
             email_subject: "Landing Page Test".to_string(),
             email_body: format!(
-                "Hello! :D \n\n
-                 
-                 Its just a test,\n
-                 It was sent by https://landing-page-rs.onrender.com/\n
-                 The full project can be found at https://github.com/tommatti99/landing_page_rs/\n
-                 
+                "Olá! :D \n\n
 
-                 Its your input data:\n\n
-                 
-                 name: {}\n
-                 telephone_number: {}\n
+                 Nova Solicitação de Afiliado:\n\n
+
+                 Nome: {}\n
+                 Sobrenome: {}\n
+                 ddd: {}\n
+                 telefone: {}\n
+                 cpf: {}\n
                  email: {}\n
-                 want_to_receive_more_info: {}\n
-                 already_have_the_product: {}\n",
-                    data.name, data.telephone_number, data.email, 
-                    data.want_to_receive_more_info, data.already_have_the_product)
+                 nascimento: {}\n
+                 endereço: {}\n
+                 cidade: {}\n
+                 estado: {}\n
+                 termos e condicoes: {}\n",
+                    data.name, data.surname, data.prefix_telephone_number, data.telephone_number, data.cpf, data.email, 
+                    data.birth, data.address, data.city, data.state, data.terms_and_cond)
         }
     }
 }
