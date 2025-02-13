@@ -210,14 +210,14 @@ pub fn Form() -> Html {
                     </div>
                     <div style={format!("width: 50%; margin-bottom: 1em;")}>
                         <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"Sobrenome"}</h2>
-                        <input type="text" id="name" value={(*surname).clone()} oninput={surname_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
+                        <input type="text" id="surname" value={(*surname).clone()} oninput={surname_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
                     </div>
                 </div>
 
                 <div style={format!("display: flex; gap: 3rem; flex-direction: row; width:100%;")}>
                     <div style={format!("width: 7%; margin-bottom: 1em;")}>
                         <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"DDD"}</h2>
-                        <input type="text" id="telephone_number" value={(*prefix_telephone_number).clone()} oninput={prefix_telephone_number_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
+                        <input type="text" id="prefix_telephone_number" value={(*prefix_telephone_number).clone()} oninput={prefix_telephone_number_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
                     </div>
                     <div style={format!("width: 40%; margin-bottom: 1em;")}>
                         <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"Telefone"}</h2>
@@ -225,7 +225,7 @@ pub fn Form() -> Html {
                     </div>
                     <div style={format!("width: 53%; margin-bottom: 1em;")}>
                         <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"CPF"}</h2>
-                        <input type="text" id="telephone_number" value={(*cpf).clone()} oninput={cpf_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
+                        <input type="text" id="cpf" value={(*cpf).clone()} oninput={cpf_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
                     </div>
                 </div>
 
@@ -236,7 +236,7 @@ pub fn Form() -> Html {
                     </div>
                     <div style={format!("width: 30%; margin-bottom: 1em;")}>
                         <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"Data de Nascimento"}</h2>
-                        <input type="date" id="telephone_number" value={(*birth).clone()} oninput={birth_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
+                        <input type="date" id="birth" value={(*birth).clone()} oninput={birth_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
                     </div>
                 </div>
 
@@ -247,11 +247,11 @@ pub fn Form() -> Html {
                     </div>
                     <div style={format!("width: 14%; margin-bottom: 1em;")}>
                         <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"Cidade"}</h2>
-                        <input type="text" id="address" value={(*city).clone()} oninput={city_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
+                        <input type="text" id="city" value={(*city).clone()} oninput={city_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
                     </div>
                     <div style={format!("width: 10%; margin-bottom: 1em;")}>
                         <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"Estado"}</h2>
-                        <input type="text" id="address" value={(*state).clone()} oninput={state_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
+                        <input type="text" id="state" value={(*state).clone()} oninput={state_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
                     </div>
                 </div>
                 <div style={format!("width: 100%; margin-bottom: 1em;")}>
@@ -286,11 +286,16 @@ async fn send_request_to_api(request: LandingPageRequest) -> String {
     let client = reqwest::Client::new();
     let mut body_map =  HashMap::new();
     body_map.insert("name", request.name);
+    body_map.insert("surname", request.surname);
+    body_map.insert("prefix_telephone_number", request.prefix_telephone_number);
     body_map.insert("telephone_number", request.telephone_number);
+    body_map.insert("cpf", request.cpf);
     body_map.insert("email", request.email);
+    body_map.insert("birth", request.birth);
     body_map.insert("address", request.address.to_string());
+    body_map.insert("city", request.city.to_string());
+    body_map.insert("state", request.state.to_string());
     body_map.insert("terms_and_cond", request.terms_and_cond.to_string());
-    
 
     let response = client
         .post(landing_page_api)
