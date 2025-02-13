@@ -17,6 +17,10 @@ struct LandingPageRequest {
     address: String,
     city: String,
     state: String,
+    banco: String,
+    agencia: String,
+    conta: String,
+    digito_verif: String,
     terms_and_cond: bool
 } 
 #[derive(Deserialize, Debug, Clone)]
@@ -41,6 +45,10 @@ pub fn Form() -> Html {
     let address = use_state(|| String::new());
     let city = use_state(|| String::new());
     let state = use_state(|| String::new());
+    let banco = use_state(|| String::new());
+    let agencia = use_state(|| String::new());
+    let conta = use_state(|| String::new());
+    let digito_verif = use_state(|| String::new());
     let terms_and_cond = use_state(|| false); 
     
     let res_box = use_state(|| ResBoxState {on: false, text: "".to_string()}); 
@@ -144,7 +152,46 @@ pub fn Form() -> Html {
         }
         })
     };
+
+    let banco_input = {
+        let banco = banco.clone();
     
+        Callback::from(move |e: InputEvent| {
+            if let Some(input) = e.target_dyn_into::<web_sys::HtmlInputElement>() {
+                banco.set(input.value());
+        }
+        })
+    };
+    
+    let agencia_input = {
+        let agencia = agencia.clone();
+    
+        Callback::from(move |e: InputEvent| {
+            if let Some(input) = e.target_dyn_into::<web_sys::HtmlInputElement>() {
+                agencia.set(input.value());
+        }
+        })
+    };
+
+    let conta_input = {
+        let conta = conta.clone();
+    
+        Callback::from(move |e: InputEvent| {
+            if let Some(input) = e.target_dyn_into::<web_sys::HtmlInputElement>() {
+                conta.set(input.value());
+        }
+        })
+    };
+
+    let digito_verif_input = {
+        let digito_verif = digito_verif.clone();
+    
+        Callback::from(move |e: InputEvent| {
+            if let Some(input) = e.target_dyn_into::<web_sys::HtmlInputElement>() {
+                digito_verif.set(input.value());
+        }
+        })
+    };
     
     let terms_and_cond_input = {
         let terms_and_cond = terms_and_cond.clone();
@@ -168,6 +215,10 @@ pub fn Form() -> Html {
         let state_clone_address = address.clone();
         let state_clone_city = city.clone();
         let state_clone_state = state.clone();
+        let state_clone_banco = banco.clone();
+        let state_clone_agencia = agencia.clone();
+        let state_clone_conta = conta.clone();
+        let state_clone_digito_verif = digito_verif.clone();
         let state_clone_terms_and_cond = terms_and_cond.clone();
 
         let res_box = res_box.clone(); 
@@ -185,6 +236,10 @@ pub fn Form() -> Html {
                 address: (*state_clone_address).clone(),
                 city: (*state_clone_city).clone(),
                 state: (*state_clone_state).clone(),
+                banco: (*state_clone_banco).clone(),
+                agencia: (*state_clone_agencia).clone(),
+                conta: (*state_clone_conta).clone(),
+                digito_verif: (*state_clone_digito_verif).clone(),
                 terms_and_cond: (*state_clone_terms_and_cond).clone()
             };
 
@@ -254,6 +309,27 @@ pub fn Form() -> Html {
                         <input type="text" id="state" value={(*state).clone()} oninput={state_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
                     </div>
                 </div>
+
+                <div style={format!("display: flex; gap: 3rem; flex-direction: row; width:100%;")}>
+                    <div style={format!("width: 50%; margin-bottom: 1em;")}>
+                        <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"Banco"}</h2>
+                        <input type="text" id="banco" value={(*banco).clone()} oninput={banco_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
+                    </div>
+                    <div style={format!("width: 25%; margin-bottom: 1em;")}>
+                        <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"Agencia"}</h2>
+                        <input type="text" id="agencia" value={(*agencia).clone()} oninput={agencia_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
+                    </div>
+                    <div style={format!("width: 20%; margin-bottom: 1em;")}>
+                        <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"Conta"}</h2>
+                        <input type="text" id="conta" value={(*conta).clone()} oninput={conta_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
+                    </div>
+                        <div style={format!("width: 5%; margin-bottom: 1em;")}>
+                        <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}>{"DV"}</h2>
+                        <input type="text" id="digito_verif" value={(*digito_verif).clone()} oninput={digito_verif_input} style={format!("width: 100%; padding: 0.5em; border-radius: 4px; border: 1px solid #ccc;")} />
+                    </div>
+                </div>
+
+
                 <div style={format!("width: 100%; margin-bottom: 1em;")}>
                     <h2 style={format!("margin: 0.5em 0; font-size: 1em;")}><input type="checkbox" id="terms_and_cond" checked={*terms_and_cond} onclick={terms_and_cond_input}  style={format!("transform: scale(1.5);")} />{"  Concordo com os termos e condições"}</h2>
                 
@@ -295,6 +371,10 @@ async fn send_request_to_api(request: LandingPageRequest) -> String {
     body_map.insert("address", request.address.to_string());
     body_map.insert("city", request.city.to_string());
     body_map.insert("state", request.state.to_string());
+    body_map.insert("banco", request.banco.to_string());
+    body_map.insert("agencia", request.agencia.to_string());
+    body_map.insert("conta", request.conta.to_string());
+    body_map.insert("digito_verif", request.digito_verif.to_string());
     body_map.insert("terms_and_cond", request.terms_and_cond.to_string());
 
     let response = client

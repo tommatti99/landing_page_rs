@@ -13,6 +13,10 @@ pub struct CollectDataRequest {
     pub address: String,
     pub city: String,
     pub state: String,
+    pub banco: String,
+    pub agencia: String,
+    pub conta: String,
+    pub digito_verif: String,
     pub terms_and_cond: String
 }
 
