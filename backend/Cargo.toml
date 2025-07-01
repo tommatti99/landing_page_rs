@@ -17,3 +17,6 @@ lto = "fat"
 debug = false
 codegen-units = 1
 
+[[bin]]
+name = "backend"
+path = "src/main.rs"
