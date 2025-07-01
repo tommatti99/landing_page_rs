@@ -3,8 +3,15 @@ FROM rust:slim-bullseye AS builder
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
+    openssl \
+    pkg-config \
     libssl-dev \
+    libpq-dev \
     ca-certificates \
+    perl \
+    make \
+    gcc \
+    g++ \
     && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
