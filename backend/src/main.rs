@@ -21,7 +21,7 @@ fn rocket() -> _ {
     let figment: Figment = Figment::from(rocket::Config::default())
         .merge(("port", std::env::var("PORT").unwrap().parse::<u16>().unwrap()))
         .merge(("address", "0.0.0.0"))
-        .merge(("email_receiver", std::env::var("EMAIL_RECEIVER").unwrap()));
+        .merge(("email_receiver", std::env::var("EMAIL_RECEIVER").unwrap()))
         .merge(("smtp_email", std::env::var("SMTP_EMAIL").unwrap()))
         .merge(("smtp_host", std::env::var("SMTP_HOST").unwrap()));
 
