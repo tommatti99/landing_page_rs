@@ -1,4 +1,4 @@
-FROM rust:1.77 AS builder
+FROM rust:bullseye AS builder
 
 RUN apt-get update && apt-get install -y pkg-config libssl-dev curl
 
