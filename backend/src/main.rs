@@ -7,16 +7,23 @@ pub mod collect_models;
 #[macro_use] extern crate rocket;
 use rocket_cors::{CorsOptions, AllowedOrigins};
 use rocket::http::Method;
-
+use rocket::figment::Figment;
 
 
 #[launch]
 fn rocket() -> _ {
     
     let allowed_origins = AllowedOrigins::some::<&str, &str>(
-        &["https://landing-page-rs.onrender.com".into()],
+        &["https://landing-page-rs-backend.up.railway.app/".into()],
         &[] 
     );
+
+    let figment: Figment = Figment::from(rocket::Config::default())
+        .merge(("port", std::env::var("PORT").unwrap().parse::<u16>().unwrap()))
+        .merge(("address", "0.0.0.0"))
+        .merge(("email_receiver", std::env::var("EMAIL_RECEIVER").unwrap()));
+        .merge(("smtp_email", std::env::var("SMTP_EMAIL").unwrap()))
+        .merge(("smtp_host", std::env::var("SMTP_HOST").unwrap()));
 
     let cors = CorsOptions::default()
         .allowed_origins(allowed_origins)
@@ -27,7 +34,7 @@ fn rocket() -> _ {
         .expect("ERROR AT CORS");
 
     
-    rocket::build()
+    rocket::custom(figment)
         .mount("/api", routes![collect_api::collect_data_api])
         .attach(cors)
 }

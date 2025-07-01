@@ -20,27 +20,23 @@ impl EmailMessage {
             email_from: env::var("smtp_email").expect("error smtp_email"),
             email_subject: "Landing Page Test".to_string(),
             email_body: format!(
-                "Olá! :D \n
+                "Olá! :D \n\n
 
                  Nova Solicitação de Afiliado:\n\n
 
-                 Nome: {}
-                 Sobrenome: {}
-                 ddd: {}
-                 telefone: {}
-                 cpf: {}
-                 email: {}
-                 nascimento: {}
-                 endereço: {}
-                 cidade: {}
-                 estado: {}
-                 banco: {},
-                 agencia: {},
-                 conta: {},
-                 digito_verif: {},
-                 termos e condicoes: {}",
+                 Nome: {}\n
+                 Sobrenome: {}\n
+                 ddd: {}\n
+                 telefone: {}\n
+                 cpf: {}\n
+                 email: {}\n
+                 nascimento: {}\n
+                 endereço: {}\n
+                 cidade: {}\n
+                 estado: {}\n
+                 termos e condicoes: {}\n",
                     data.name, data.surname, data.prefix_telephone_number, data.telephone_number, data.cpf, data.email, 
-                    data.birth, data.address, data.city, data.state, data.banco, data.agencia, data.conta, data.digito_verif, data.terms_and_cond)
+                    data.birth, data.address, data.city, data.state, data.terms_and_cond)
         }
     }
 }

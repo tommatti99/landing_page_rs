@@ -16,3 +16,4 @@ openssl = { version = "0.10.59", features = ["vendored"] }
 lto = "fat" 
 debug = false
 codegen-units = 1
+

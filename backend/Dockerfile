@@ -3,10 +3,7 @@ FROM rust:slim-bullseye AS builder
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    openssl \
-    pkg-config \
     libssl-dev \
-    libpq-dev \
     ca-certificates \
     && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/* \
@@ -28,7 +25,6 @@ RUN apt-get update && apt-get install -y \
     openssl \
     pkg-config \
     libssl-dev \
-    libpq-dev \
     ca-certificates \
     && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/* \
