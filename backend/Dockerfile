@@ -11,7 +11,11 @@ RUN apt-get update && apt-get install -y \
 
 COPY Cargo.toml Cargo.lock  ./
 
+RUN mkdir -p src && echo "fn main() {}" > src/main.rs
+
 RUN cargo fetch
+
+RUN rm -rf src 
 
 COPY ./src ./src
 
@@ -22,8 +26,6 @@ FROM debian:bullseye-slim AS prod-stage
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    openssl \
-    pkg-config \
     libssl-dev \
     ca-certificates \
     && update-ca-certificates \
